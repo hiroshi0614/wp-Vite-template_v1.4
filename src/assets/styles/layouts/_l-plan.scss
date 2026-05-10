@@ -1,0 +1,10 @@
+@use '../global' as *;
+
+.l-plan {
+  margin-block-start: calc(46 * var(--to-rem));
+  margin-block-end: calc(34 * var(--to-rem));
+  @include mq(md) {
+    margin-block-start: calc(66 * var(--to-rem));
+    margin-block-end: calc(55 * var(--to-rem));
+  }
+}

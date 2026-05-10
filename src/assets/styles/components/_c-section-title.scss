@@ -1,0 +1,19 @@
+@use "../global" as *;
+
+.c-section-title {
+
+  font-size: calc(25 * var(--to-rem));
+  line-height: calc(40 / 25);
+  font-weight: var(--fw-bold);
+  text-align: center;
+  font-family: "YuGothic";
+
+  @include mq(md) {
+    font-size: calc(30 * var(--to-rem));
+    line-height: calc(50 / 30);
+  }
+
+  &--white {
+    color: var(--color-white);
+  }
+}

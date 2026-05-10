@@ -1,0 +1,29 @@
+@use "../global" as *;
+
+.p-concept {
+  background-color: var(--color-red);
+  color: var(--color-white);
+  text-align: center;
+
+  &__title {
+    font-size: calc(25 * var(--to-rem));
+    line-height: calc(40 / 25);
+    font-weight: var(--fw-bold);
+    font-family: var(--title-font-family);
+
+    @include mq(md) {
+      font-size: calc(30 * var(--to-rem));
+      line-height: calc(50 / 30);
+    }
+  }
+
+  &__text {
+    font-size: calc(18 * var(--to-rem));
+    line-height: calc(30 / 18);
+    margin-top: calc(14 * var(--to-rem));
+
+    @include mq(md) {
+      margin-top: calc(30 * var(--to-rem));
+    }
+  }
+}

@@ -1,0 +1,69 @@
+@use '../global' as *;
+
+.p-blog-list {
+    display: grid;
+    gap: prem(30);
+    grid-template-columns: repeat(1, 1fr);
+    @include mq(md){
+        gap: prem(70);
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.p-blog-list__item a {
+    position: relative;
+    display: block;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 prem(40) 0 rgba(0, 0, 0, .05);
+}
+
+.p-blog-list__item-img {
+    width: 100%;
+}
+
+.p-blog-list__item-img img {
+    width: 100%;
+    aspect-ratio: 360/186;
+    object-fit: cover;
+}
+
+.p-blog-list__item-category {
+    padding: prem(5) prem(8);
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: prem(14);
+    line-height: 1;
+    color: #fff;
+    background-color: #DE8430;
+    @include mq(md){
+        font-size: prem(16);
+    }
+}
+
+.p-blog-list__item-content {
+    padding: prem(20) prem(25) prem(25);
+    @include mq(md){
+        padding: prem(25) prem(30) prem(30);
+    }
+}
+
+.p-blog-list__item-title {
+    font-size: prem(14);
+    font-weight: 700;
+    line-height: 1.5;
+    @include mq(md){
+        font-size: prem(16);
+    }
+}
+
+.p-blog-list__item-text {
+    margin-top: prem(10);
+    font-size: prem(12);
+    line-height: 1.5;
+    @include mq(md){
+        margin-top: prem(15);
+        font-size: prem(14);
+    }
+}

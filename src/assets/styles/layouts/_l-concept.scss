@@ -1,0 +1,9 @@
+@use '../global' as *;
+
+.l-concept {
+  padding-block: calc(50 * var(--to-rem)) calc(40 * var(--to-rem));
+
+  @include mq(md) {
+    padding-block: calc(68 * var(--to-rem)) calc(60 * var(--to-rem));
+  }
+}

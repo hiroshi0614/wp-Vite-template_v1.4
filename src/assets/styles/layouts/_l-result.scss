@@ -1,0 +1,10 @@
+@use '../global' as *;
+
+.l-result {
+  padding-block-start: calc(46 * var(--to-rem));
+  padding-block-end: calc(50 * var(--to-rem));
+  @include mq(md) {
+    padding-block-start: calc(66 * var(--to-rem));
+    padding-block-end: calc(75 * var(--to-rem));
+  }
+}

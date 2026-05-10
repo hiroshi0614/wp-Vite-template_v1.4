@@ -1,0 +1,8 @@
+@use '../global' as *;
+
+.l-faq {
+  margin-block-start: calc(55 * var(--to-rem));
+  @include mq(md) {
+    margin-block-start: calc(90.56 * var(--to-rem));
+  }
+}

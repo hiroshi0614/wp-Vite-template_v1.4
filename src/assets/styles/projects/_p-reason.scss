@@ -1,0 +1,85 @@
+@use "../global" as *;
+
+.p-reason {
+
+  &__items {
+    margin-block-start: calc(36 * var(--to-rem));
+
+    @include mq(md) {
+      margin-block-start: calc(40 * var(--to-rem));
+    }
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+
+    @include mq(md) {
+      flex-direction: row;
+    }
+
+    & + & {
+      margin-block-start: calc(40 * var(--to-rem));
+    }
+
+    &-img {
+      width: 100%;
+
+      @include mq(md) {
+        max-width: calc(350 * var(--to-rem));
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 335 / 200;
+        object-fit: cover;
+
+        @include mq(md) {
+          aspect-ratio: 350 / 247;
+        }
+      }
+    }
+
+    &-title {
+      color: var(--color-text);
+      font-size: calc(20 * var(--to-rem));
+      line-height: calc(30 / 20);
+      font-weight: var(--fw-bold);
+      text-align: left;
+      margin-block-start: calc(30 * var(--to-rem));
+      padding-block-end: calc(10 * var(--to-rem));
+      position: relative;
+
+      @include mq(md) {
+        vertical-align: top;
+        padding-inline-start: calc(50 * var(--to-rem));
+        margin-block-start: calc(7 * var(--to-rem));
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset-inline-start: 0;
+        inset-block-end: 0;
+        display: inline-block;
+        width: 100%;
+        height: 2px;
+        background-color: var(--color-red);
+      }
+    }
+
+    &-text {
+      color: var(--color-text);
+      font-size: calc(16 * var(--to-rem));
+      line-height: calc(30 / 16);
+      margin-block-start: calc(17 * var(--to-rem));
+
+      @include mq(md) {
+        font-size: calc(18 * var(--to-rem));
+        line-height: calc(33 / 18);
+        margin-inline-start: calc(50 * var(--to-rem));
+      }
+    }
+  }
+}

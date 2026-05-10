@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod +x /Users/hiroshi_pc/Desktop/wp-Vite-template_v1.4/scripts/run-visual-checks.sh)"
+    ]
+  }
+}

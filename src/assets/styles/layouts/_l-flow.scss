@@ -1,0 +1,8 @@
+@use '../global' as *;
+
+.l-flow {
+  margin-block-start: calc(46 * var(--to-rem));
+  @include mq(md) {
+    margin-block-start: calc(34 * var(--to-rem));
+  }
+}

@@ -1,0 +1,9 @@
+// PC（md以上）で非表示にするユーティリティ（グローバルユーティリティ）
+@use '../global' as *;
+
+.u-hidden-pc {
+  display: block;
+  @include mq(md){
+    display: none;
+  }
+}

@@ -1,0 +1,103 @@
+@use "../global" as *;
+
+.p-faq-list {
+
+  margin-block-start: calc(39 * var(--to-rem));
+
+  @include mq(md) {
+    margin-block-start: calc(36 * var(--to-rem));
+  }
+
+  &__item {
+border-top: 1px solid var(--color-border);
+
+&:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+  }
+
+  &__item-question {
+    position: relative;
+    padding: calc(15 * var(--to-rem)) calc(40 * var(--to-rem)) calc(15 * var(--to-rem)) calc(64.5 * var(--to-rem));
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    @include mq(md) {
+      padding: calc(15 * var(--to-rem)) calc(60 * var(--to-rem)) calc(15 * var(--to-rem)) calc(19.5 * var(--to-rem));
+      font-size: calc(17 * var(--to-rem));
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: calc(29 * var(--to-rem));
+      width: calc(4 * var(--to-rem));
+      height: calc(21 * var(--to-rem));
+      border-top: calc(1 * var(--to-rem)) solid var(--color-black);
+      border-right: calc(1 * var(--to-rem)) solid var(--color-black);
+      transform: translateY(-50%) rotate(135deg); 
+      transition: var(--duration);
+ 
+
+      @include mq(md) {
+        width: calc(13 * var(--to-rem));
+        height: calc(13 * var(--to-rem));
+      }
+    }
+
+    &.is-open::before {
+      transform: translateY(-50%) rotate(315deg);
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(35 * var(--to-rem));
+      height: calc(35 * var(--to-rem));
+      margin-inline-end: calc(10 * var(--to-rem));
+      color: var(--color-white);
+      background-color: var(--color-black);
+      border-radius: 50%;
+      font-size: calc(20 * var(--to-rem));
+      font-weight: var(--fw-bold);
+    }
+  }
+
+  &__item-answer {
+    display: none;
+    position: relative;
+    padding: calc(15 * var(--to-rem)) calc(40 * var(--to-rem)) calc(15 * var(--to-rem)) calc(64.5 * var(--to-rem));
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: rgba(203, 0, 0, 0.098);
+    font-weight: var(--fw-bold);
+    color: var(--color-red);
+
+
+    @include mq(md) {
+      padding: calc(15 * var(--to-rem)) calc(60 * var(--to-rem)) calc(15 * var(--to-rem)) calc(19.5 * var(--to-rem));
+      font-size: calc(17 * var(--to-rem));
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(35 * var(--to-rem));
+      height: calc(35 * var(--to-rem));
+      margin-inline-end: calc(10 * var(--to-rem));
+      color: var(--color-white);
+      background-color: var(--color-red);
+      border-radius: 50%;
+      font-size: calc(20 * var(--to-rem));
+      font-weight: var(--fw-bold);
+      flex-shrink: 0;
+    }
+  }
+}

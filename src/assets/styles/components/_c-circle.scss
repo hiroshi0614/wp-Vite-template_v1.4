@@ -1,0 +1,8 @@
+@use "../global" as *;
+
+.c-circle {
+  width: calc(20 * var(--to-rem));
+  height: calc(20 * var(--to-rem));
+  border-radius: 50%;
+  background-color: var(--color-red);
+}

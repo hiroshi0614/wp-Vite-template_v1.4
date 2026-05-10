@@ -1,0 +1,28 @@
+{
+  "project": "figma-to-code",
+  "retry_count": 0,
+  "max_retry": 3,
+  "tasks": {
+    "ComponentA": {
+      "status": "pending",
+      "agent": "CoderA",
+      "files": ["src/components/ComponentA.tsx"],
+      "exports": [],
+      "notes": ""
+    },
+    "StyleSheet": {
+      "status": "pending",
+      "agent": "CoderB",
+      "files": ["src/styles/main.css"],
+      "exports": [],
+      "notes": ""
+    },
+    "StateLogic": {
+      "status": "pending",
+      "agent": "CoderC",
+      "files": ["src/hooks/useStore.ts"],
+      "exports": [],
+      "notes": ""
+    }
+  }
+}
