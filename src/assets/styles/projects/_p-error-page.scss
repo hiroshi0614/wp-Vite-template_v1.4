@@ -1,0 +1,75 @@
+@use "../global" as *;
+
+.p-error-hero {
+  position: relative;
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: calc(400 * var(--to-rem));
+    object-fit: cover;
+
+    @include mq(md) {
+      height: calc(400 * var(--to-rem));
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+  }
+
+  &__text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(32 * var(--to-rem));
+    font-weight: var(--fw-bold);
+    color: var(--color-white);
+    letter-spacing: 0.05em;
+
+    @include mq(md) {
+      font-size: calc(48 * var(--to-rem));
+    }
+  }
+}
+
+.p-error {
+  padding-block: calc(60 * var(--to-rem));
+  text-align: center;
+
+  @include mq(md) {
+    padding-block: calc(80 * var(--to-rem));
+  }
+
+  &__lead {
+    font-size: calc(16 * var(--to-rem));
+    font-weight: var(--fw-bold);
+    color: var(--color-text);
+    margin-block-end: calc(24 * var(--to-rem));
+
+    @include mq(md) {
+      font-size: calc(18 * var(--to-rem));
+    }
+  }
+
+  &__body {
+    font-size: calc(14 * var(--to-rem));
+    color: var(--color-text);
+    line-height: 1.8;
+    margin-block-end: calc(40 * var(--to-rem));
+
+    @include mq(md) {
+      font-size: calc(16 * var(--to-rem));
+      margin-block-end: calc(56 * var(--to-rem));
+    }
+  }
+
+  &__cta {
+    display: flex;
+    justify-content: center;
+  }
+}

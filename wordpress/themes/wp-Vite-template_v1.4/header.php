@@ -23,12 +23,9 @@
           <picture class="p-header__logo-img">
             <source srcset="<?php echo esc_url(get_theme_file_uri("/assets/images/common/logo.svg")); ?>"
               media="(min-width: 768px)" type="image/svg+xml" />
-            <!-- 幅768px以上なら表示 -->
-            <img src="<?php echo esc_url(get_theme_file_uri("/assets/images/common/logo-sp.svg")); ?>" />
-            <!-- それ以外で表示 -->
+            <img src="<?php echo esc_url(get_theme_file_uri("/assets/images/common/logo-sp.svg")); ?>" alt="きたむらミュージックスクール" width="120" height="40" />
           </picture>
         </a>
-        <span style="display:none;">kitashoo music school</span>
       </h1>
       <?php else: ?>
       <div class="p-header__logo">
@@ -36,12 +33,9 @@
           <picture class="p-header__logo-img">
             <source srcset="<?php echo esc_url(get_theme_file_uri("/assets/images/common/logo.svg")); ?>"
               media="(min-width: 768px)" type="image/svg+xml" />
-            <!-- 幅768px以上なら表示 -->
-            <img src="<?php echo esc_url(get_theme_file_uri("/assets/images/common/logo-sp.svg")); ?>" />
-            <!-- それ以外で表示 -->
+            <img src="<?php echo esc_url(get_theme_file_uri("/assets/images/common/logo-sp.svg")); ?>" alt="きたむらミュージックスクール" width="120" height="40" />
           </picture>
         </a>
-        <span style="display:none;">kitashoo music school</span>
       </div>
       <?php endif; ?>
       <nav class="p-header__nav">
@@ -50,7 +44,7 @@
             <a href="<?php echo esc_url( home_url( '/about' ) ); ?>">料金</a>
           </li>
           <li class="p-header__nav-item u-underline__black">
-            <a href="<?php page_path("news"); ?>">ニュース</a>
+            <a href="<?php echo esc_url( home_url( '/blog' ) ); ?>">ブログ</a>
           </li>
           <li class="p-header__nav-item u-underline__black">
             <a href="<?php echo esc_url( home_url( '/result' ) ); ?>">卒業実績</a>
@@ -62,19 +56,19 @@
           </li>
         </ul>
       </nav>
-      <button class="p-header__hamburger js-hamburger" aria-label="メニューを開く">
+      <button class="p-header__hamburger js-hamburger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="js-drawer">
         <span></span>
         <span></span>
         <span></span>
       </button>
-      <div class="p-header__drawer js-drawer">
+      <div id="js-drawer" class="p-header__drawer js-drawer" aria-hidden="true">
         <nav class="p-header__drawer-nav">
           <ul class="p-header__drawer-list">
             <li class="p-header__drawer-item">
               <a href="<?php echo esc_url( home_url( '/about' ) ); ?>">料金</a>
             </li>
             <li class="p-header__drawer-item">
-              <a href="<?php page_path("news"); ?>">ニュース</a>
+              <a href="<?php echo esc_url( home_url( '/blog' ) ); ?>">ブログ</a>
             </li>
             <li class="p-header__drawer-item">
               <a href="<?php echo esc_url( home_url( '/result' ) ); ?>">卒業実績</a>

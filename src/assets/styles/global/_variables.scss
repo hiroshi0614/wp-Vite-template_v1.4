@@ -60,3 +60,9 @@
     --header-height: 80px;
   }
 }
+
+// pxをcalc(N * var(--to-rem))形式に変換するSass関数
+// 使い方: font-size: prem(16); → calc(16 * var(--to-rem))
+@function prem($px) {
+  @return calc(#{$px} * var(--to-rem));
+}

@@ -1,0 +1,13 @@
+@use '../global' as *;
+
+.l-fix-bar {
+  position: fixed;
+  right: calc(20 * var(--to-rem));
+  bottom: var(--fix-bar-bottom, calc(20 * var(--to-rem)));
+  z-index: 850;
+  transition: bottom 0.2s ease;
+
+  @include mq(md) {
+    right: 0;
+  }
+}

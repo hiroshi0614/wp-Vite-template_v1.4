@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fix-bar 実装解説</title>
+  <style>
+    :root {
+      --bg: #f7f8fa;
+      --card: #fff;
+      --text: #1a1a2e;
+      --muted: #5c6370;
+      --accent: #cb0000;
+      --primary: #234f5e;
+      --border: #e2e6ed;
+      --code-bg: #1e2433;
+      --code-text: #e8ecf4;
+      --highlight: #fff8e6;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    header {
+      padding: 2.5rem 1.5rem;
+      background: linear-gradient(135deg, var(--primary), #163540);
+      color: #fff;
+    }
+
+    header h1 { margin: 0 0 0.5rem; font-size: 1.75rem; }
+    header p { margin: 0; opacity: 0.9; max-width: 52rem; }
+
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    h2 {
+      margin: 0 0 1rem;
+      padding-bottom: 0.5rem;
+      font-size: 1.35rem;
+      border-bottom: 3px solid var(--accent);
+    }
+
+    h3 { margin: 1.5rem 0 0.75rem; font-size: 1.1rem; color: var(--primary); }
+    p { margin: 0 0 1rem; }
+    ul, ol { margin: 0 0 1rem; padding-left: 1.4rem; }
+    li { margin-bottom: 0.35rem; }
+
+    .tag {
+      display: inline-block;
+      padding: 0.15em 0.55em;
+      font-size: 0.8em;
+      font-weight: 700;
+      border-radius: 4px;
+      margin-right: 0.25em;
+    }
+
+    .tag--l { background: #e8f4fc; color: #1565a8; }
+    .tag--p { background: #fce8e8; color: #a81515; }
+    .tag--c { background: #eef8ee; color: #1a6b1a; }
+    .tag--js { background: #f3eef8; color: #5a2d82; }
+
+    pre {
+      margin: 0 0 1rem;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      background: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 8px;
+    }
+
+    code {
+      font-family: "SF Mono", "Consolas", monospace;
+      font-size: 0.9em;
+    }
+
+    p code, li code {
+      padding: 0.1em 0.35em;
+      background: #eef1f6;
+      border-radius: 3px;
+      color: #c41e3a;
+    }
+
+    .diagram {
+      margin: 1rem 0;
+      padding: 1.25rem;
+      background: var(--bg);
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+
+    .diagram svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: stretch;
+      margin: 1rem 0;
+    }
+
+    .flow__step {
+      flex: 1 1 140px;
+      padding: 1rem;
+      background: var(--highlight);
+      border: 2px solid #e6d9a8;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .flow__arrow {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      color: var(--muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      margin: 1rem 0;
+    }
+
+    th, td {
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+
+    th { background: #eef1f6; }
+
+    .formula-box {
+      padding: 1rem 1.25rem;
+      background: #eef8ff;
+      border-left: 4px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      font-family: monospace;
+      font-size: 1.05rem;
+      margin: 1rem 0;
+    }
+
+    .note {
+      padding: 0.85rem 1rem;
+      background: #fff8e6;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      margin: 1rem 0;
+    }
+
+    .file-tree {
+      font-family: monospace;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    footer.page-foot {
+      text-align: center;
+      padding: 1rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>fix-bar（固定バー）実装解説</h1>
+    <p>
+      トップページ右下に固定表示される「ページトップボタン」と「お問い合わせ」ボタンの仕組みを、
+      HTML・CSS・JavaScript の役割分担とともに図解します。
+    </p>
+  </header>
+
+  <main>
+  <!-- 概要 -->
+  <section id="overview">
+    <h2>1. 全体像</h2>
+    <p>fix-bar は次の <strong>3つの役割</strong> を持ちます。</p>
+    <table>
+      <thead>
+        <tr>
+          <th>役割</th>
+          <th>担当</th>
+          <th>内容</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>① 表示タイミング</td>
+          <td>JavaScript</td>
+          <td>MV（メインビジュアル）が画面外に出たら表示（<code>is-visible</code>）</td>
+        </tr>
+        <tr>
+          <td>② 縦位置の制御</td>
+          <td>JavaScript + CSS</td>
+          <td>通常は下から 20px。フッターが近づくと上に押し上げる</td>
+        </tr>
+        <tr>
+          <td>③ 見た目・レイアウト</td>
+          <td>CSS（FLOCSS）</td>
+          <td>固定配置・ボタン配置・フェードイン</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>関連ファイル</h3>
+    <div class="file-tree">
+      wordpress/themes/.../template-parts/front-page/fix-bar.php  ← HTML<br>
+      src/assets/styles/layouts/_l-fix-bar.scss                 ← 位置（Layout）<br>
+      src/assets/styles/projects/_p-fix-bar.scss                ← 見た目（Project）<br>
+      src/assets/styles/projects/_page-top.scss                 ← ページトップ丸ボタン<br>
+      src/assets/js/_fix-bar.js                                 ← 挙動（script.js から import）
+    </div>
+  </section>
+
+  <!-- HTML -->
+  <section id="html">
+    <h2>2. HTML 構造（fix-bar.php）</h2>
+    <pre><code>&lt;div class="l-fix-bar p-fix-bar js-fix-bar"&gt;
+  &lt;div class="p-page-top"&gt;
+    &lt;img src=".../arrow-t.svg" alt="Page Top"&gt;
+  &lt;/div&gt;
+  &lt;a href="/contact" class="l-btn c-btn c-btn--primary"&gt;お問い合わせ&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+
+    <div class="diagram">
+      <svg viewBox="0 0 520 320" width="520" height="320" aria-label="fix-barのDOM構造">
+        <rect x="280" y="20" width="200" height="280" rx="8" fill="#fff" stroke="#234f5e" stroke-width="2"/>
+        <text x="380" y="48" text-anchor="middle" font-size="13" font-weight="bold" fill="#234f5e">.js-fix-bar</text>
+        <text x="380" y="64" text-anchor="middle" font-size="10" fill="#5c6370">+ .l-fix-bar + .p-fix-bar</text>
+
+        <rect x="300" y="80" width="160" height="68" rx="34" fill="#666" opacity="0.85"/>
+        <text x="380" y="118" text-anchor="middle" font-size="11" fill="#fff">.p-page-top</text>
+        <text x="380" y="132" text-anchor="middle" font-size="9" fill="#ddd">↑ クリックで最上部へ</text>
+
+        <rect x="300" y="170" width="160" height="52" rx="4" fill="#cb0000"/>
+        <text x="380" y="202" text-anchor="middle" font-size="11" fill="#fff">.c-btn お問い合わせ</text>
+
+        <rect x="20" y="40" width="220" height="240" rx="6" fill="#f0f4f8" stroke="#ccc"/>
+        <text x="130" y="70" text-anchor="middle" font-size="12" fill="#333">画面（viewport）</text>
+        <text x="130" y="100" text-anchor="middle" font-size="10" fill="#666">position: fixed</text>
+        <text x="130" y="118" text-anchor="middle" font-size="10" fill="#666">右下に常に追従</text>
+        <path d="M 240 200 L 298 200" stroke="#cb0000" stroke-width="2" marker-end="url(#arrow)"/>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+            <polygon points="0 0, 8 4, 0 8" fill="#cb0000"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+
+    <h3>FLOCSS クラスの意味</h3>
+    <ul>
+      <li><span class="tag tag--l">l-fix-bar</span> Layout … 画面上の<strong>固定位置</strong>（bottom / right / z-index）</li>
+      <li><span class="tag tag--p">p-fix-bar</span> Project … このコンポーネント固有の<strong>見た目</strong>（flex・透明度）</li>
+      <li><span class="tag tag--js">js-fix-bar</span> JavaScript … スクリプトの<strong>フック用</strong>（スタイルは原則当てない）</li>
+      <li><span class="tag tag--c">c-btn</span> Component … ボタン共通スタイル</li>
+    </ul>
+  </section>
+
+  <!-- CSS -->
+  <section id="css">
+    <h2>3. CSS の役割</h2>
+
+    <h3>3-1. Layout（_l-fix-bar.scss）— 座標の土台</h3>
+    <pre><code>.l-fix-bar {
+  position: fixed;
+  right: calc(20 * var(--to-rem));
+  bottom: var(--fix-bar-bottom, calc(20 * var(--to-rem)));
+  z-index: 850;
+  transition: bottom 0.2s ease;
+}</code></pre>
+    <ul>
+      <li><code>position: fixed</code> … スクロールしても画面（viewport）に張り付く</li>
+      <li><code>--fix-bar-bottom</code> … JS が書き換える CSS 変数。デフォルトは下から 20px 相当</li>
+      <li><code>transition: bottom</code> … フッター回避で bottom が変わるとき、0.2 秒でなめらかに移動</li>
+    </ul>
+
+    <h3>3-2. Project（_p-fix-bar.scss）— 表示 / 非表示</h3>
+    <pre><code>.p-fix-bar {
+  opacity: 0;
+  pointer-events: none;
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}</code></pre>
+    <p>初期状態は<strong>透明でクリック不可</strong>。JS が <code>is-visible</code> を付けたときだけ表示されます。</p>
+  </section>
+
+  <!-- 座標の図解 -->
+  <section id="coordinates">
+    <h2>4. 縦位置の計算（フッター回避）</h2>
+    <p>
+      <code>bottom</code> は「要素の<strong>下端</strong>が、画面の<strong>下端</strong>から何 px 上にあるか」を表します。
+    </p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 480 400" width="480" height="400" aria-label="bottomとfooterTopの関係">
+        <!-- viewport -->
+        <rect x="40" y="20" width="280" height="360" fill="#f7f8fa" stroke="#333" stroke-width="2"/>
+        <text x="180" y="45" text-anchor="middle" font-size="12" font-weight="bold">viewport（画面）</text>
+        <text x="180" y="62" text-anchor="middle" font-size="10" fill="#666">innerHeight = 900px の例</text>
+
+        <!-- footer -->
+        <rect x="40" y="280" width="280" height="100" fill="#cb0000" opacity="0.3"/>
+        <line x1="40" y1="280" x2="360" y2="280" stroke="#cb0000" stroke-width="2" stroke-dasharray="6,4"/>
+        <text x="360" y="275" font-size="11" fill="#cb0000">footerTop（フッター上端）</text>
+
+        <!-- fix-bar -->
+        <rect x="200" y="200" width="100" height="80" rx="6" fill="#234f5e" opacity="0.85"/>
+        <text x="250" y="245" text-anchor="middle" font-size="10" fill="#fff">fix-bar</text>
+
+        <!-- bottom arrow from viewport bottom -->
+        <line x1="320" y1="380" x2="320" y2="280" stroke="#1565a8" stroke-width="2"/>
+        <text x="335" y="335" font-size="11" fill="#1565a8">bottom</text>
+        <text x="335" y="350" font-size="9" fill="#666">（下端の余白）</text>
+
+        <!-- innerHeight label -->
+        <line x1="25" y1="20" x2="25" y2="380" stroke="#999" stroke-width="1"/>
+        <text x="15" y="200" font-size="10" fill="#999" transform="rotate(-90 15 200)">innerHeight</text>
+
+        <!-- formula annotation -->
+        <rect x="340" y="120" width="130" height="90" rx="6" fill="#eef8ff" stroke="#234f5e"/>
+        <text x="405" y="145" text-anchor="middle" font-size="10" font-weight="bold">計算式</text>
+        <text x="405" y="165" text-anchor="middle" font-size="9">bottom = max(20,</text>
+        <text x="405" y="180" text-anchor="middle" font-size="9">  innerHeight</text>
+        <text x="405" y="195" text-anchor="middle" font-size="9">  − footerTop)</text>
+      </svg>
+    </div>
+
+    <div class="formula-box">
+      bottom = Math.max(20, window.innerHeight − footerTop + FOOTER_GAP)
+      <br><small style="color:#666">※ FOOTER_GAP は現在 0（フッターにぴったり接する）</small>
+    </div>
+
+    <h3>状態 A：フッターがまだ遠い（通常）</h3>
+    <p><code>footerTop</code> が画面の高さより大きい → 計算結果が 20 未満 → <strong>bottom = 20px</strong> のまま。</p>
+
+    <h3>状態 B：フッターが近づいた</h3>
+    <p>フッター上端が画面内に入る → <code>bottom</code> を大きくして fix-bar を<strong>上に押し上げ</strong>、下端がフッター上端に触れる位置に合わせる。</p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 520 180" width="520" height="180" aria-label="スクロール前後の比較">
+        <text x="130" y="20" text-anchor="middle" font-size="12" font-weight="bold">スクロール前</text>
+        <rect x="40" y="30" width="180" height="130" fill="#f7f8fa" stroke="#333"/>
+        <rect x="150" y="120" width="50" height="35" fill="#234f5e"/>
+        <text x="130" y="175" text-anchor="middle" font-size="10">bottom: 20px</text>
+
+        <text x="390" y="20" text-anchor="middle" font-size="12" font-weight="bold">フッター手前</text>
+        <rect x="300" y="30" width="180" height="130" fill="#f7f8fa" stroke="#333"/>
+        <rect x="300" y="100" width="180" height="60" fill="#cb0000" opacity="0.25"/>
+        <rect x="380" y="75" width="50" height="35" fill="#234f5e"/>
+        <text x="390" y="175" text-anchor="middle" font-size="10">bottom: 大きい値（押し上げ）</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- JavaScript -->
+  <section id="javascript">
+    <h2>5. JavaScript の処理フロー（_fix-bar.js）</h2>
+
+    <h3>5-1. 起動タイミング</h3>
+    <div class="flow">
+      <div class="flow__step">DOMContentLoaded</div>
+      <span class="flow__arrow">→</span>
+      <div class="flow__step">要素取得<br><small>.js-fix-bar<br>.p-mv<br>.p-footer</small></div>
+      <span class="flow__arrow">→</span>
+      <div class="flow__step">各種イベント登録<br><small>scroll / resize</small></div>
+    </div>
+
+    <h3>5-2. 位置更新（スクロール時）</h3>
+    <div class="diagram">
+      <svg viewBox="0 0 560 200" width="560" height="200" aria-label="スクロール時の処理フロー">
+        <rect x="20" y="20" width="120" height="44" rx="6" fill="#e8f4fc" stroke="#1565a8"/>
+        <text x="80" y="47" text-anchor="middle" font-size="11">scroll / resize</text>
+
+        <path d="M 140 42 L 170 42" stroke="#333" marker-end="url(#arr2)"/>
+        <rect x="170" y="20" width="140" height="44" rx="6" fill="#fff8e6" stroke="#c9a227"/>
+        <text x="240" y="40" text-anchor="middle" font-size="10">requestAnimationFrame</text>
+        <text x="240" y="55" text-anchor="middle" font-size="9">（1フレームに1回に制限）</text>
+
+        <path d="M 310 42 L 340 42" stroke="#333" marker-end="url(#arr2)"/>
+        <rect x="340" y="20" width="200" height="44" rx="6" fill="#eef8ee" stroke="#1a6b1a"/>
+        <text x="440" y="47" text-anchor="middle" font-size="11">updateFixBarBottom()</text>
+
+        <path d="M 440 64 L 440 90" stroke="#333" marker-end="url(#arr2)"/>
+        <rect x="320" y="90" width="240" height="44" rx="6" fill="#fce8e8" stroke="#cb0000"/>
+        <text x="440" y="117" text-anchor="middle" font-size="10">--fix-bar-bottom を更新</text>
+
+        <rect x="20" y="90" width="260" height="90" rx="6" fill="#f3eef8" stroke="#5a2d82"/>
+        <text x="150" y="115" text-anchor="middle" font-size="11" font-weight="bold">ticking フラグ</text>
+        <text x="150" y="135" text-anchor="middle" font-size="9">連続 scroll でも</text>
+        <text x="150" y="150" text-anchor="middle" font-size="9">計算はフレーム単位で間引く</text>
+        <text x="150" y="168" text-anchor="middle" font-size="9">（パフォーマンス対策）</text>
+
+        <defs>
+          <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+            <polygon points="0 0, 8 4, 0 8" fill="#333"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+
+    <h3>5-3. MV との表示切り替え（IntersectionObserver）</h3>
+    <pre><code>IntersectionObserver → .p-mv を監視
+
+MV が画面内にある   → is-visible を外す（非表示）
+MV が画面外に出た   → is-visible を付与（表示）+ 位置を再計算</code></pre>
+
+    <div class="diagram">
+      <svg viewBox="0 0 520 220" width="520" height="220" aria-label="MVとfix-barの表示関係">
+        <text x="130" y="25" text-anchor="middle" font-size="12" font-weight="bold">ページ上部（MV表示中）</text>
+        <rect x="40" y="35" width="180" height="100" fill="#333" opacity="0.2"/>
+        <text x="130" y="90" text-anchor="middle" font-size="11">.p-mv 表示中</text>
+        <text x="130" y="155" text-anchor="middle" font-size="10" fill="#cb0000">fix-bar: 非表示</text>
+        <text x="130" y="170" text-anchor="middle" font-size="9" fill="#666">opacity: 0</text>
+
+        <text x="390" y="25" text-anchor="middle" font-size="12" font-weight="bold">下へスクロール後</text>
+        <rect x="300" y="35" width="180" height="40" fill="#333" opacity="0.1"/>
+        <text x="390" y="60" text-anchor="middle" font-size="9" fill="#999">MV は画面上部外</text>
+        <rect x="380" y="120" width="50" height="40" fill="#234f5e"/>
+        <text x="390" y="175" text-anchor="middle" font-size="10" fill="#1a6b1a">fix-bar: 表示</text>
+        <text x="390" y="190" text-anchor="middle" font-size="9" fill="#666">.is-visible 付与</text>
+      </svg>
+    </div>
+
+    <h3>5-4. ページトップクリック</h3>
+    <pre><code>.p-page-top クリック
+  → e.preventDefault()
+  → window.scrollTo({ top: 0, behavior: 'smooth' })</code></pre>
+  </section>
+
+  <!-- データの流れ -->
+  <section id="data-flow">
+    <h2>6. CSS 変数と JS の連携</h2>
+    <div class="diagram">
+      <svg viewBox="0 0 600 120" width="600" height="120" aria-label="CSS変数のデータフロー">
+        <rect x="10" y="35" width="130" height="50" rx="6" fill="#f3eef8" stroke="#5a2d82"/>
+        <text x="75" y="65" text-anchor="middle" font-size="11">_fix-bar.js</text>
+
+        <path d="M 140 60 L 200 60" stroke="#333" stroke-width="2" marker-end="url(#arr3)"/>
+        <text x="170" y="50" text-anchor="middle" font-size="9">setProperty</text>
+
+        <rect x="200" y="35" width="180" height="50" rx="6" fill="#e8f4fc" stroke="#1565a8"/>
+        <text x="290" y="58" text-anchor="middle" font-size="10">--fix-bar-bottom: 120px</text>
+        <text x="290" y="72" text-anchor="middle" font-size="9">（インライン style）</text>
+
+        <path d="M 380 60 L 440 60" stroke="#333" stroke-width="2" marker-end="url(#arr3)"/>
+        <text x="410" y="50" text-anchor="middle" font-size="9">参照</text>
+
+        <rect x="440" y="35" width="150" height="50" rx="6" fill="#eef8ee" stroke="#1a6b1a"/>
+        <text x="515" y="65" text-anchor="middle" font-size="11">.l-fix-bar</text>
+        <text x="515" y="78" text-anchor="middle" font-size="8">bottom: var(...)</text>
+
+        <defs>
+          <marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+            <polygon points="0 0, 8 4, 0 8" fill="#333"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+    <p>
+      JS は見た目を直接いじらず、<strong>CSS 変数だけ</strong>を更新します。
+      実際の座標は SCSS 側の <code>bottom: var(--fix-bar-bottom)</code> が担当するため、
+      責務が分離されています（FLOCSS の考え方に沿った形）。
+    </p>
+  </section>
+
+  <!-- まとめ -->
+  <section id="summary">
+    <h2>7. まとめ</h2>
+    <div class="note">
+      <strong>一言でいうと：</strong>
+      fix-bar は「MV を過ぎたら右下に出る固定 UI」で、スクロールに応じて
+      <code>bottom</code> を動的に変え、フッターと重ならないようにしています。
+    </div>
+    <ol>
+      <li>HTML … 構造と FLOCSS クラス（<code>js-</code> は JS 用フック）</li>
+      <li>CSS Layout … <code>position: fixed</code> + CSS 変数で縦位置</li>
+      <li>CSS Project … <code>is-visible</code> でフェード表示</li>
+      <li>JS … スクロールで <code>--fix-bar-bottom</code> 更新、MV 監視で表示切替、クリックでトップへ</li>
+    </ol>
+  </section>
+  </main>
+
+  <footer class="page-foot">
+    wp-Vite-template — fix-bar 解説ドキュメント
+  </footer>
+</body>
+</html>

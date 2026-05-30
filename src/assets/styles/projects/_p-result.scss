@@ -23,8 +23,22 @@
       margin-block-start: calc(40 * var(--to-rem));
     }
 
+    > a {
+      &:hover {
+        img {
+          transform: scale(1.1);
+        }
+
+        .p-result-item__title,
+        .p-result-item__text {
+          opacity: 0.8;
+        }
+      }
+    }
+
     &__img {
       width: 100%;
+      overflow: hidden;
 
       @include mq(md) {
         max-width: calc(270 * var(--to-rem));
@@ -35,6 +49,7 @@
         height: 100%;
         aspect-ratio: 335 / 200;
         object-fit: cover;
+        transition: transform 0.3s ease;
 
         @include mq(md) {
           aspect-ratio: 270 / 190;
@@ -47,6 +62,8 @@
       line-height: calc(33 / 22);
       font-weight: var(--fw-bold);
       margin-block-start: calc(27 * var(--to-rem));
+      opacity: 1;
+      transition: opacity 0.3s ease;
 
       @include mq(md) {
         margin-block-start: calc(14 * var(--to-rem));
@@ -60,6 +77,8 @@
       font-weight: var(--fw-medium);
       margin-block-start: calc(10 * var(--to-rem));
       color: var(--color-white);
+      opacity: 1;
+      transition: opacity 0.3s ease;
     }
   }
 }
@@ -132,6 +151,160 @@
         calc(-10 * var(--to-rem) - (100vw - 768px) * 0.1282051282),
         calc(-10 * var(--to-rem))
       );
+    }
+  }
+}
+
+// 卒業実績詳細：関連記事
+.p-result-related {
+  margin-block-start: calc(56 * var(--to-rem));
+
+  &__title {
+    font-size: calc(18 * var(--to-rem));
+    font-weight: var(--fw-bold);
+    margin-block-end: calc(24 * var(--to-rem));
+    padding-block-end: calc(12 * var(--to-rem));
+    border-block-end: 2px solid var(--color-accent);
+
+    @include mq(md) {
+      font-size: calc(20 * var(--to-rem));
+      margin-block-end: calc(32 * var(--to-rem));
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: calc(20 * var(--to-rem));
+
+    @include mq(md) {
+      gap: calc(24 * var(--to-rem));
+    }
+  }
+
+  &__item {
+    border-bottom: 1px solid var(--color-border);
+    padding-block-end: calc(20 * var(--to-rem));
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: row;
+    gap: calc(16 * var(--to-rem));
+    text-decoration: none;
+    color: var(--color-text);
+    transition: opacity var(--duration);
+    align-items: flex-start;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  &__img {
+    position: relative;
+    flex-shrink: 0;
+    width: calc(120 * var(--to-rem));
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+
+    @include mq(md) {
+      width: calc(160 * var(--to-rem));
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__cat {
+    position: absolute;
+    top: calc(8 * var(--to-rem));
+    left: calc(8 * var(--to-rem));
+    display: inline-block;
+    padding: calc(2 * var(--to-rem)) calc(10 * var(--to-rem));
+    font-size: calc(10 * var(--to-rem));
+    font-weight: var(--fw-bold);
+    color: var(--color-white);
+    background-color: var(--color-accent);
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: calc(6 * var(--to-rem));
+  }
+
+  &__item-title {
+    font-size: calc(14 * var(--to-rem));
+    font-weight: var(--fw-bold);
+    line-height: 1.5;
+
+    @include mq(md) {
+      font-size: calc(15 * var(--to-rem));
+    }
+  }
+
+  &__date {
+    font-size: calc(12 * var(--to-rem));
+    color: #888;
+  }
+}
+
+// 卒業実績詳細：ACFフィールドテーブル
+.p-result-detail__table {
+  width: 100%;
+  margin-block-start: calc(32 * var(--to-rem));
+  border-collapse: collapse;
+
+  @include mq(md) {
+    margin-block-start: calc(40 * var(--to-rem));
+  }
+}
+
+.p-result-detail__th {
+  width: calc(100 * var(--to-rem));
+  padding: calc(12 * var(--to-rem)) calc(16 * var(--to-rem));
+  background-color: var(--color-gray);
+  font-size: calc(14 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  text-align: start;
+  vertical-align: top;
+  white-space: nowrap;
+
+  @include mq(md) {
+    width: calc(120 * var(--to-rem));
+    font-size: calc(15 * var(--to-rem));
+  }
+}
+
+.p-result-detail__td {
+  padding: calc(12 * var(--to-rem)) calc(16 * var(--to-rem));
+  font-size: calc(14 * var(--to-rem));
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  line-height: 1.7;
+
+  @include mq(md) {
+    font-size: calc(15 * var(--to-rem));
+  }
+
+  a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: calc(2 * var(--to-rem));
+    transition: opacity var(--duration);
+
+    &:hover {
+      opacity: 0.8;
     }
   }
 }

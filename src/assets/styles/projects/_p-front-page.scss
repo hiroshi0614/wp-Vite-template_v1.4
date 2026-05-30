@@ -1,0 +1,36 @@
+@use "../global" as *;
+
+// ============================================================
+// フッター: デザインカンプに合わせて背景色をアクセントカラー（赤）に設定
+// _p-footer.scss の --color-primary をこのプロジェクト向けに上書き
+// ============================================================
+.p-footer {
+  background-color: var(--color-red);
+}
+
+// ============================================================
+// フッター: ソーシャルアイコン
+// ============================================================
+.p-footer__social {
+  display: flex;
+  gap: calc(12 * var(--to-rem));
+  justify-content: center;
+  margin-block-start: calc(24 * var(--to-rem));
+
+  li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity var(--duration);
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  img {
+    width: auto;
+    height: calc(20 * var(--to-rem));
+    object-fit: contain;
+  }
+}

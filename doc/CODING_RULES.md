@@ -45,10 +45,71 @@ src/assets/
       _variables.scss       # CSS変数・@font-face・@use "sass:math"
       _breakpoints.scss     # $breakpoints・$mediaqueries・@mixin mq()
       _base.scss            # html/a/img/body 等の基本スタイル
-    layouts/                # l- レイヤー
-    components/             # c- レイヤー
-    projects/               # p- レイヤー
+    layouts/                # l- レイヤー（レイアウト構造のみ）
+      _header.scss          # l-header
+      _footer.scss          # l-footer
+      _inner.scss           # l-inner（コンテナ幅）
+      _main.scss            # l-main
+    components/             # c- レイヤー（再利用可能な小さなUI部品）
+      _btn.scss             # c-btn
+      _category.scss        # c-category
+      _section-title.scss   # c-section-title
+      _pagination.scss      # c-pagination
+      _sns.scss             # c-sns
+      ...
+    projects/               # p- レイヤー（ページ・セクション固有）
+      _header.scss          # p-header（ナビ・ロゴ・ハンバーガー）
+      _footer.scss          # p-footer（フッターコンテンツ）
+      _drawer.scss          # p-drawer（ドロワーメニュー）
+      _top.scss             # p-mv, p-about等（TOPページ固有）
+      _about.scss           # aboutページ固有
+      _news.scss            # newsページ固有
+      _contact.scss         # contactページ固有
+      _{ページ名}.scss      # 下層ページ追加時はここに新規作成
     utilities/              # u- レイヤー
+      _utility.scss
+```
+
+### ⚠️ SCSSファイルの配置ルール（絶対厳守）
+
+**「どのコンポーネント・セクションのスタイルか」でファイルを決める。「どのページで使うか」で決めない。**
+
+```
+✅ フッターのスタイル   → projects/_footer.scss
+✅ ヘッダーのスタイル   → projects/_header.scss
+✅ ボタンのスタイル     → components/_btn.scss
+✅ TOPのMVスタイル      → projects/_top.scss
+✅ aboutページ固有      → projects/_about.scss
+
+❌ フッターを _front-page.scss に書く     → 絶対禁止
+❌ ヘッダーを _top.scss に書く            → 絶対禁止
+❌ 複数ページ共通スタイルを1ページのファイルに書く → 絶対禁止
+❌ layouts/ ファイルに p- クラスを書く   → 絶対禁止
+```
+
+新しいページを追加する場合は `projects/_{ページ名}.scss` を新規作成する。
+既存コンポーネントのスタイルを新ページのファイルに書き足すことは禁止。
+
+### ⚠️ layoutsファイルの責務（重要）
+
+`layouts/` フォルダのファイルは **上下の余白（margin-block / padding-block）の設定のみ** を担当する。
+`p-` で始まるクラスのスタイルは **必ず `projects/` フォルダのファイルに書くこと。**
+
+```scss
+// ✅ layouts/_blog.scss の正しい書き方（l- クラスの上下余白のみ）
+.l-blog {
+  margin-block-start: calc(80 * var(--to-rem));
+
+  @include mq() {
+    margin-block-start: calc(120 * var(--to-rem));
+  }
+}
+
+// ❌ layouts/_blog.scss に p- クラスを書くのは絶対禁止
+.p-blog__title {   // ← これは projects/_blog.scss に書くこと
+  font-size: calc(24 * var(--to-rem));
+}
+```
   js/
     script.js               # エントリーポイント（_ なしファイルのみViteがバンドル対象）
     _drawer.js              # _ 始まり = モジュール（script.jsからimport）
@@ -344,6 +405,7 @@ if (el) {
 ```
 
 - インデント：スペース2つ
+- **`<main>` タグにはクラスを付与しない**（セマンティクス要素として素のタグで使う）
 - 属性順：`class` → `id` → `type` → `src/href` → `width` → `height` → `alt` → その他
 - 自己終了タグは `/` をつける（`<meta />` `<link />` `<img />`）
 - **パスはルート相対**（`/` 始まり）。相対パス（`./`）は使わない
@@ -353,6 +415,24 @@ if (el) {
 - `<button>` には `type="button"` を明示する
 - ハンバーガーには `aria-label` `aria-expanded` `aria-controls` を付与する
 - ドロワーには `id` と `aria-hidden` を付与する
+
+### ⚠️ インラインスタイル（`style="..."`）は原則禁止
+
+HTMLタグ内に直接スタイルを書くことを禁止する。すべてSCSSのクラスで定義すること。
+
+```html
+❌ 禁止
+<div style="margin-top: 20px;">
+<p style="color: red; font-size: 14px;">
+<span style="display: none;">
+
+✅ 正しい書き方
+<div class="p-section__lead">       ← SCSSでスタイル定義
+<p class="p-section__text--alert">  ← Modifierで対応
+<span class="is-hidden">            ← is-クラスで状態管理
+```
+
+唯一の例外：`adjust-admin-bar.php` のようにWordPress管理バー対応で動的な値が必要な場合のみ `<style>` ブロックを使用可。`style=""` 属性は例外なし。
 
 ```html
 <!-- ハンバーガー・ドロワー（index.html 準拠） -->
@@ -476,7 +556,7 @@ wordpress/themes/{THEME_NAME}/
 ```php
 <?php get_header(); ?>
 
-<main class="p-works l-works">
+<main>
   <div class="p-works__inner l-inner">
 
     <?php if (have_posts()) : ?>
@@ -761,6 +841,7 @@ $title_parts = get_archive_title_parts();
 
 ### HTML
 - [ ] パスがルート相対（`/` 始まり）か
+- [ ] `<main>` タグにクラスが付いていないか
 - [ ] `<img>` に `width` `height` `alt` があるか
 - [ ] メインビジュアル以外に `loading="lazy"` があるか
 - [ ] `<button>` に `type="button"` があるか

@@ -1,7 +1,29 @@
 {
   "permissions": {
     "allow": [
-      "Bash(chmod +x /Users/hiroshi_pc/Desktop/wp-Vite-template_v1.4/scripts/run-visual-checks.sh)"
+      "Bash(chmod +x /Users/hiroshi_pc/Desktop/wp-Vite-template_v1.4/scripts/run-visual-checks.sh)",
+      "Bash(yarn add *)",
+      "Bash(npx playwright *)",
+      "Bash(yarn node *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8888)",
+      "Bash(yarn screenshot *)",
+      "Bash(xargs -I{} basename {})",
+      "Bash(curl -s http://localhost:8888/wp-json/wp/v2/pages?per_page=50)",
+      "Bash(python3 -c \"import sys,json; pages=json.load\\(sys.stdin\\); [print\\(p['link'], p['slug']\\) for p in pages]\")",
+      "Bash(curl -s \"http://localhost:8888/wp-json/wp/v2/pages?per_page=50\")",
+      "Bash(python3 -c \"import sys,json; pages=json.load\\(sys.stdin\\); [print\\(p['link'], '|', p['slug']\\) for p in pages]\")",
+      "Bash(curl -s \"http://localhost:8888/wp-json/wp/v2/posts?per_page=5\")",
+      "Bash(python3 -c \"import sys,json; posts=json.load\\(sys.stdin\\); [print\\(p['link'], '|', p['slug']\\) for p in posts]\")",
+      "Bash(curl -s \"http://localhost:8888/wp-json/wp/v2/result?per_page=5\")",
+      "Bash(curl -s \"http://localhost:8888/wp-json/wp/v2/types\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(k\\) for k in d.keys\\(\\)]\")",
+      "Bash(yarn check:all)",
+      "Bash(yarn check:design)",
+      "Bash(yarn wp-env *)",
+      "Bash(yarn build *)",
+      "Bash(yarn build:wp)",
+      "Bash(curl -s http://localhost:8888/blog/)",
+      "Bash(curl -s http://localhost:8888/blog/blog4/)"
     ]
   }
 }

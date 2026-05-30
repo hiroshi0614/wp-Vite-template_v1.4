@@ -1,0 +1,350 @@
+@use "../global" as *;
+
+// ページヒーロー（料金ページなど固定ページ用）
+.p-page-hero {
+  position: relative;
+  height: calc(200 * var(--to-rem));
+  overflow: hidden;
+}
+
+.p-page-hero__img {
+  position: absolute;
+  inset: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.p-page-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(80, 80, 80, 0.49);
+  mix-blend-mode: multiply;
+}
+
+.p-page-hero__title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  font-size: calc(20 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  font-family: "YuGothic", sans-serif;
+  text-align: center;
+
+  @include mq(md) {
+    font-size: calc(25 * var(--to-rem));
+  }
+}
+
+// パンくずリスト
+.p-breadcrumb {
+  background-color: #e8e8e8;
+  padding-block: calc(10 * var(--to-rem));
+}
+
+.p-breadcrumb__list {
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--to-rem));
+  flex-wrap: wrap;
+  font-size: calc(14 * var(--to-rem));
+
+  @include mq(md) {
+    font-size: calc(16 * var(--to-rem));
+  }
+}
+
+.p-breadcrumb__link {
+  color: var(--color-text);
+  text-decoration: none;
+  transition: opacity var(--duration);
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.p-breadcrumb__separator {
+  color: var(--color-text);
+}
+
+.p-breadcrumb__current {
+  color: var(--color-text);
+}
+
+// 料金体系セクション
+.p-about-fee {
+  padding-block: calc(50 * var(--to-rem));
+
+  @include mq(md) {
+    padding-block: calc(60 * var(--to-rem));
+  }
+}
+
+.p-about-fee__title {
+  font-size: calc(22 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  font-family: "YuGothic", sans-serif;
+  text-align: center;
+  margin-block-end: calc(32 * var(--to-rem));
+
+  @include mq(md) {
+    font-size: calc(25 * var(--to-rem));
+  }
+}
+
+.p-about-fee__summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(20 * var(--to-rem));
+  flex-wrap: wrap;
+}
+
+.p-about-fee__badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-red);
+  color: var(--color-white);
+  font-size: calc(16 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  padding: calc(14 * var(--to-rem)) calc(20 * var(--to-rem));
+  min-width: calc(170 * var(--to-rem));
+
+  @include mq(md) {
+    font-size: calc(20 * var(--to-rem));
+    min-width: calc(210 * var(--to-rem));
+  }
+}
+
+.p-about-fee__plus {
+  font-size: calc(22 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+}
+
+.p-about-fee__text {
+  margin-block-start: calc(30 * var(--to-rem));
+  font-size: calc(14 * var(--to-rem));
+  line-height: calc(30 / 16);
+  color: var(--color-text);
+
+  @include mq(md) {
+    font-size: calc(18 * var(--to-rem));
+  }
+}
+
+// プラン比較テーブル
+.p-about-plan {
+  padding-block-end: calc(50 * var(--to-rem));
+
+  @include mq(md) {
+    padding-block-end: calc(60 * var(--to-rem));
+  }
+}
+
+.p-about-plan__title {
+  font-size: calc(22 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  font-family: "YuGothic", sans-serif;
+  text-align: center;
+  margin-block-end: calc(32 * var(--to-rem));
+
+  @include mq(md) {
+    font-size: calc(25 * var(--to-rem));
+  }
+}
+
+.p-about-plan__table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.p-about-plan__table {
+  width: 100%;
+  min-width: calc(560 * var(--to-rem));
+  border-collapse: collapse;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.p-about-plan__plan-head {
+  text-align: center;
+  color: var(--color-white);
+  font-size: calc(14 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  padding: calc(14 * var(--to-rem)) calc(8 * var(--to-rem));
+  background-color: var(--color-text);
+  vertical-align: bottom;
+  width: 22%;
+
+  @include mq(md) {
+    font-size: calc(20 * var(--to-rem));
+    padding: calc(18 * var(--to-rem)) calc(8 * var(--to-rem));
+  }
+
+  &--recommended {
+    background-color: var(--color-red);
+    padding-block-start: calc(8 * var(--to-rem));
+  }
+}
+
+.p-about-plan__badge {
+  display: block;
+  font-size: calc(12 * var(--to-rem));
+  font-weight: var(--fw-regular);
+  margin-block-end: calc(4 * var(--to-rem));
+
+  @include mq(md) {
+    font-size: calc(17 * var(--to-rem));
+  }
+}
+
+.p-about-plan__feature-col {
+  width: 34%;
+}
+
+.p-about-plan__feature-head {
+  text-align: left;
+  font-size: calc(13 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  padding: calc(18 * var(--to-rem)) calc(10 * var(--to-rem));
+  border-top: 1px solid #ccc;
+  white-space: nowrap;
+
+  @include mq(md) {
+    font-size: calc(17 * var(--to-rem));
+    padding: calc(22 * var(--to-rem)) calc(20 * var(--to-rem));
+  }
+}
+
+.p-about-plan__price-head {
+  text-align: left;
+  font-size: calc(13 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  padding: calc(18 * var(--to-rem)) calc(10 * var(--to-rem));
+  border-top: 1px solid #ccc;
+  white-space: nowrap;
+
+  @include mq(md) {
+    font-size: calc(17 * var(--to-rem));
+    padding: calc(22 * var(--to-rem)) calc(20 * var(--to-rem));
+  }
+}
+
+.p-about-plan__cell {
+  text-align: center;
+  padding: calc(12 * var(--to-rem)) calc(8 * var(--to-rem));
+  border-top: 1px solid #ccc;
+  font-size: calc(13 * var(--to-rem));
+  vertical-align: middle;
+  line-height: calc(8 / 5);
+
+  @include mq(md) {
+    font-size: calc(17 * var(--to-rem));
+    padding: calc(18 * var(--to-rem)) calc(8 * var(--to-rem));
+  }
+
+  &--price {
+    font-size: calc(16 * var(--to-rem));
+    font-weight: var(--fw-bold);
+
+    @include mq(md) {
+      font-size: calc(22 * var(--to-rem));
+    }
+  }
+
+  &--price-recommended {
+    color: var(--color-red);
+    font-size: calc(16 * var(--to-rem));
+    font-weight: var(--fw-bold);
+
+    @include mq(md) {
+      font-size: calc(22 * var(--to-rem));
+    }
+  }
+}
+
+.p-about-plan__table tbody tr:nth-child(even) .p-about-plan__cell,
+.p-about-plan__table tbody tr:nth-child(even) .p-about-plan__feature-head,
+.p-about-plan__table tbody tr:nth-child(even) .p-about-plan__price-head {
+  background-color: rgba(80, 80, 80, 0.15);
+}
+
+.p-about-plan__dot {
+  display: inline-block;
+  width: calc(13 * var(--to-rem));
+  height: calc(13 * var(--to-rem));
+  border-radius: 50%;
+  background-color: var(--color-text);
+  vertical-align: middle;
+
+  @include mq(md) {
+    width: calc(15 * var(--to-rem));
+    height: calc(15 * var(--to-rem));
+  }
+
+  &--red {
+    background-color: var(--color-red);
+  }
+}
+
+.p-about-plan__dash {
+  display: inline-block;
+  width: calc(28 * var(--to-rem));
+  height: 2px;
+  background-color: var(--color-text);
+  vertical-align: middle;
+}
+
+.p-about-plan__note {
+  margin-block-start: calc(16 * var(--to-rem));
+  font-size: calc(12 * var(--to-rem));
+  color: var(--color-text);
+
+  @include mq(md) {
+    font-size: calc(17 * var(--to-rem));
+  }
+}
+
+// お問い合わせCTA
+.p-about-cta {
+  display: flex;
+  justify-content: flex-end;
+  margin-block-end: calc(60 * var(--to-rem));
+
+  @include mq(md) {
+    margin-block-end: calc(80 * var(--to-rem));
+  }
+}
+
+.p-about-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-red);
+  color: var(--color-white);
+  font-size: calc(16 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.1em;
+  padding: calc(14 * var(--to-rem)) calc(30 * var(--to-rem));
+  min-width: calc(200 * var(--to-rem));
+  transition: opacity var(--duration);
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  @include mq(md) {
+    font-size: calc(20 * var(--to-rem));
+    min-width: calc(300 * var(--to-rem));
+    padding: calc(14 * var(--to-rem)) calc(50 * var(--to-rem));
+  }
+}

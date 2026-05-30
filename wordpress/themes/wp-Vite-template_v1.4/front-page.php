@@ -41,9 +41,9 @@
         <div class="p-plan__circle">
           <picture>
             <source srcset="<?php echo esc_url(get_theme_file_uri("/assets/images/top/semicircle.svg")); ?>"
-              media="(min-width: 768px)" type="image/jpg" /> <!-- 幅768px以上なら表示 -->
-            <img src="<?php echo esc_url(get_theme_file_uri("/assets/images/top/semicircle-sp.svg")); ?>" />
-            <!-- それ以外で表示 -->
+              media="(min-width: 768px)" type="image/svg+xml" />
+            <img src="<?php echo esc_url(get_theme_file_uri("/assets/images/top/semicircle-sp.svg")); ?>" alt=""
+              width="375" height="200" />
           </picture>
         </div>
         <div class="p-plan__diagram">
@@ -241,35 +241,39 @@
         <ul class="p-faq__list p-faq-list">
           <li class="p-faq-list__item">
             <p class="p-faq-list__item-question js-faq-question"><span>Q</span>どのような生徒さんがどれぐらいの期間で稼いでいますか？</p>
-            <p class="p-faq-list__item-answer">
-              <span>A</span>卒業生は半年ほどで稼ぐ方が多いです。
-
-            <p>
-            </p>
+            <div class="p-faq-list__item-answer">
+              <div class="p-faq-list__item-answer-inner">
+                <span>A</span>卒業生は半年ほどで稼ぐ方が多いです。
+              </div>
+            </div>
           </li>
           <li class="p-faq-list__item">
             <p class="p-faq-list__item-question js-faq-question"><span>Q</span>途中でプランを変更することは可能ですか？</p>
-            <p class="p-faq-list__item-answer">
-              <span>A</span>途中でプラン変更も可能です。毎月15日までに申請すれば翌月からプランが変更となります。
-            </p>
+            <div class="p-faq-list__item-answer">
+              <div class="p-faq-list__item-answer-inner">
+                <span>A</span>途中でプラン変更も可能です。毎月15日までに申請すれば翌月からプランが変更となります。
+              </div>
+            </div>
           </li>
           <li class="p-faq-list__item">
             <p class="p-faq-list__item-question js-faq-question">
               <span>Q</span>入学金などの分割払いはできますか？
             </p>
-            <p class="p-faq-list__item-answer">
-              <span>A</span>分割払いにも対応しています。
-
-            </p>
+            <div class="p-faq-list__item-answer">
+              <div class="p-faq-list__item-answer-inner">
+                <span>A</span>分割払いにも対応しています。
+              </div>
+            </div>
           </li>
           <li class="p-faq-list__item">
             <p class="p-faq-list__item-question js-faq-question">
               <span>Q</span>休学することも可能ですか？
             </p>
-            <p class="p-faq-list__item-answer">
-              <span>A</span>可能です。申請により休学できます。
-
-            </p>
+            <div class="p-faq-list__item-answer">
+              <div class="p-faq-list__item-answer-inner">
+                <span>A</span>可能です。申請により休学できます。
+              </div>
+            </div>
           </li>
         </ul>
       </div>
@@ -277,49 +281,52 @@
   </section>
 
   <section>
-    <div class="l-blog p-blog">
-      <div class="p-blog__inner">
-        <ul class="p-blog__list p-blog-list">
-          <li class="p-blog-list__item">
-            <a href="#">
-              <div class="p-blog-list__item-img">
-                <img src="<?php echo esc_url(get_theme_file_uri("/assets/images/top/blog01.webp")); ?>" alt="省略">
+    <div class="l-blog">
+      <div class="l-inner">
+        <h2 class="p-blog__heading c-section-title">ブログ</h2>
+        <?php
+          $blog_query = new WP_Query([
+            'post_type'      => 'post',
+            'posts_per_page' => 3,
+            'post_status'    => 'publish',
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+          ]);
+        ?>
+        <?php if ($blog_query->have_posts()): ?>
+        <ul class="p-blog__list">
+          <?php while ($blog_query->have_posts()): $blog_query->the_post(); ?>
+          <li class="p-blog__item">
+            <a href="<?php the_permalink(); ?>" class="p-blog__item-link">
+              <div class="p-blog__item-img">
+                <?php if (has_post_thumbnail()): ?>
+                <?php the_post_thumbnail('medium_large', ['loading' => 'lazy']); ?>
+                <?php else: ?>
+                <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/top/blog01.webp')); ?>" alt=""
+                  width="300" height="200" loading="lazy" />
+                <?php endif; ?>
               </div>
-              <p class="p-blog-list__item-category">カテゴリー</p>
-              <div class="p-blog-list__item-content">
-                <p class="p-blog-list__item-title">タイトルタイトル</p>
-                <p class="p-blog-list__item-text">テキストテキストテキストテキストテキストテキストテキストテキスト</p>
+              <div class="p-blog__item-body">
+                <?php $category = get_the_category(); if (!empty($category)): ?>
+                <span class="p-blog__item-category"><?php echo esc_html($category[0]->name); ?></span>
+                <?php endif; ?>
+                <p class="p-blog__item-title"><?php the_title(); ?></p>
+                <time class="p-blog__item-date"
+                  datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>"><?php echo esc_html(get_the_date('Y.m.d')); ?></time>
               </div>
             </a>
           </li>
-          <li class="p-blog-list__item">
-            <a href="#">
-              <div class="p-blog-list__item-img">
-                <img src="./images/common/blog.jpg" alt="省略">
-              </div>
-              <p class="p-blog-list__item-category">カテゴリー</p>
-              <div class="p-blog-list__item-content">
-                <p class="p-blog-list__item-title">タイトルタイトル</p>
-                <p class="p-blog-list__item-text">テキストテキストテキストテキストテキストテキストテキストテキスト</p>
-              </div>
-            </a>
-          </li>
-          <li class="p-blog-list__item">
-            <a href="#">
-              <div class="p-blog-list__item-img">
-                <img src="./images/common/blog.jpg" alt="省略">
-              </div>
-              <p class="p-blog-list__item-category">カテゴリー</p>
-              <div class="p-blog-list__item-content">
-                <p class="p-blog-list__item-title">タイトルタイトル</p>
-                <p class="p-blog-list__item-text">テキストテキストテキストテキストテキストテキストテキストテキスト</p>
-              </div>
-            </a>
-
-          </li>
+          <?php endwhile; wp_reset_postdata(); ?>
         </ul>
+        <div class="p-blog__cta">
+          <a href="<?php echo esc_url(home_url('/blog/')); ?>" class="p-blog__cta">ブログ一覧へ</a>
+        </div>
+        <?php else: ?>
+        <p class=" p-blog__empty">記事が投稿されていません。</p>
+        <?php endif; ?>
       </div>
     </div>
   </section>
+  <?php get_template_part('template-parts/front-page/fix-bar'); ?>
 </main>
 <?php get_footer(); ?>

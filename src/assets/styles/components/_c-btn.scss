@@ -1,33 +1,25 @@
-@use '../foundation' as *;
+@use '../global' as *;
 
 .c-btn {
-  padding: calc(14 * var(--to-rem)) calc(60 * var(--to-rem));
-  display: inline-block;
-  font-size: calc(15 * var(--to-rem));
-  line-height: calc(1 / 1);
+  width: calc(300 * var(--to-rem));
+  height: calc(60 * var(--to-rem));
+  display: flex;
+  align-items: center;
+  justify-content: center;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border: 1px solid var(--color-black);
-  border-radius: calc(50 * var(--to-rem));
-  color: var(--color-text);
-  background-color: var(--color-white);
-  transition: background-color var(--duration), color var(--duration);
-
-  &:hover,
-  &:focus {
-    background-color: var(--color-accent);
-    color: var(--color-white);
-  }
-}
-
-// Modifier
-.c-btn--black {
+  font-size: prem(20);
+  line-height: calc(33 / 20);
   color: var(--color-white);
-  background-color: var(--color-black);
+  background-color: var(--color-accent);
+  transition: .3s;
+}
 
-  &:hover,
-  &:focus {
-    background-color: var(--color-accent);
-    color: var(--color-white);
+.c-btn:hover {
+  @include mq(md){
+      color: var(--color-accent);
+      background-color: var(--color-white);
+      opacity: 1;
+      border: 1px solid var(--color-accent);
   }
 }
+

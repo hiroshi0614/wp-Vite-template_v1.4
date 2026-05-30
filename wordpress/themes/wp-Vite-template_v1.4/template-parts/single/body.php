@@ -47,6 +47,29 @@ if (has_post_thumbnail()): ?>
 <?php endif;
 ?>
 
+<?php if ($post_type === "post"):
+  $share_url   = urlencode(get_permalink());
+  $share_title = urlencode(get_the_title());
+?>
+<div class="p-single__share">
+  <a href="https://twitter.com/intent/tweet?url=<?php echo $share_url; ?>&text=<?php echo $share_title; ?>" target="_blank" rel="noopener noreferrer" class="p-single__share-btn p-single__share-btn--twitter" aria-label="Xでシェア">
+    <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/blog/icon-share-twitter.svg')); ?>" alt="" width="22" height="18" />
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="p-single__share-btn p-single__share-btn--facebook" aria-label="Facebookでシェア">
+    <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/blog/icon-share-facebook.svg')); ?>" alt="" width="22" height="22" />
+  </a>
+  <a href="https://b.hatena.ne.jp/entry/<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="p-single__share-btn p-single__share-btn--hatena" aria-label="はてなブックマークでシェア">
+    <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/blog/icon-share-hatena.svg')); ?>" alt="" width="22" height="22" />
+  </a>
+  <a href="https://getpocket.com/edit?url=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="p-single__share-btn p-single__share-btn--pocket" aria-label="Pocketに保存">
+    <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/blog/icon-share-pocket.svg')); ?>" alt="" width="22" height="22" />
+  </a>
+  <a href="https://social-plugins.line.me/lineit/share?url=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="p-single__share-btn p-single__share-btn--line" aria-label="LINEでシェア">
+    <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/blog/icon-share-line.svg')); ?>" alt="" width="22" height="22" />
+  </a>
+</div>
+<?php endif; ?>
+
 <?php
 // 追加画像の表示（ACFフィールド）
 $featured_image = "";

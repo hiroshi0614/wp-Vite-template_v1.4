@@ -4,7 +4,7 @@
  * home.php / archive-news.php から利用
  */
 ?>
-<main class="l-main">
+<main>
   <section class="p-news-list">
     <div class="p-news-list__inner l-inner">
       <div class="p-news-list__title">

@@ -306,15 +306,36 @@
   user-select: none;
 }
 
-.p-form__checkbox .wpcf7-form-control-wrap,
-.p-form__checkbox .wpcf7-form-control {
+.p-form__radio .wpcf7-list-item label {
   display: flex;
   align-items: center;
 }
 
-.p-form__radio .wpcf7-list-item label {
+// CF7 checkboxグループを縦並びに
+.wpcf7-form-control.wpcf7-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: calc(10 * var(--to-rem));
+  align-items: flex-start;
+}
+
+.wpcf7-form-control.wpcf7-checkbox .wpcf7-list-item {
   display: flex;
   align-items: center;
+  margin: 0;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: calc(8 * var(--to-rem));
+    cursor: pointer;
+  }
+}
+
+.wpcf7-form-control.wpcf7-checkbox .wpcf7-list-item-label {
+  font-size: calc(16 * var(--to-rem));
+  color: var(--_form-color-text);
+  user-select: none;
 }
 
 .p-form__item .wpcf7-list-item {

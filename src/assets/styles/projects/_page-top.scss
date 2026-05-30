@@ -1,0 +1,17 @@
+@use '../global' as *;
+
+.p-page-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: prem(68);
+  height: prem(68);
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+
+  img {
+    width: calc(30 * var(--to-rem));
+    object-fit: contain;
+  }
+}

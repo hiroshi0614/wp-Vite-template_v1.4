@@ -5,7 +5,11 @@
  */
 $post_type = get_post_type();
 $post_type_object = get_post_type_object($post_type);
-$post_type_label = $post_type === "post" ? "ニュース" : ($post_type_object ? $post_type_object->labels->singular_name : "投稿");
+$label_map = [
+  'post'   => 'ブログ',
+  'result' => '卒業実績',
+];
+$post_type_label = $label_map[$post_type] ?? ($post_type_object ? $post_type_object->labels->singular_name : '投稿');
 
 // カテゴリー・タクソノミーの取得
 $taxonomy = "";
@@ -28,8 +32,16 @@ $next_post = $post_type === "post" ? get_next_post() : get_next_post(false, "", 
   <?php if ($prev_post): ?>
     <div class="p-single__nav-item p-single__nav-item--prev">
       <a href="<?php echo esc_url(get_permalink($prev_post->ID)); ?>" class="p-single__nav-link">
-        <span class="p-single__nav-label">前の<?php echo esc_html($post_type_label); ?></span>
-        <span class="p-single__nav-title"><?php echo esc_html(get_the_title($prev_post->ID)); ?></span>
+        <?php $prev_thumb = get_the_post_thumbnail_url($prev_post->ID, 'thumbnail'); ?>
+        <?php if ($prev_thumb): ?>
+          <div class="p-single__nav-thumb">
+            <img src="<?php echo esc_url($prev_thumb); ?>" alt="" loading="lazy" />
+          </div>
+        <?php endif; ?>
+        <div class="p-single__nav-text">
+          <span class="p-single__nav-label">前の<?php echo esc_html($post_type_label); ?></span>
+          <span class="p-single__nav-title"><?php echo esc_html(get_the_title($prev_post->ID)); ?></span>
+        </div>
       </a>
     </div>
   <?php endif; ?>
@@ -37,8 +49,16 @@ $next_post = $post_type === "post" ? get_next_post() : get_next_post(false, "", 
   <?php if ($next_post): ?>
     <div class="p-single__nav-item p-single__nav-item--next">
       <a href="<?php echo esc_url(get_permalink($next_post->ID)); ?>" class="p-single__nav-link">
-        <span class="p-single__nav-label">次の<?php echo esc_html($post_type_label); ?></span>
-        <span class="p-single__nav-title"><?php echo esc_html(get_the_title($next_post->ID)); ?></span>
+        <?php $next_thumb = get_the_post_thumbnail_url($next_post->ID, 'thumbnail'); ?>
+        <?php if ($next_thumb): ?>
+          <div class="p-single__nav-thumb">
+            <img src="<?php echo esc_url($next_thumb); ?>" alt="" loading="lazy" />
+          </div>
+        <?php endif; ?>
+        <div class="p-single__nav-text">
+          <span class="p-single__nav-label">次の<?php echo esc_html($post_type_label); ?></span>
+          <span class="p-single__nav-title"><?php echo esc_html(get_the_title($next_post->ID)); ?></span>
+        </div>
       </a>
     </div>
   <?php endif; ?>

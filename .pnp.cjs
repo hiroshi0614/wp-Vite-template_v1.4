@@ -28,6 +28,7 @@ const RAW_RUNTIME_STATE =
       [null, {\
         "packageLocation": "./",\
         "packageDependencies": [\
+          ["@playwright/test", "npm:1.59.1"],\
           ["@prettier/plugin-php", "virtual:7137b46d0df523b17200b99f01f69f736eae84690b8e1d784a42e1a09fb978249eba01c0c0187976701f5dff14ef3eeb7eec115c475fc5a9ac7a08fc781df4e7#npm:0.23.0"],\
           ["@splidejs/splide", "npm:4.1.4"],\
           ["@wordpress/env", "npm:11.0.0"],\
@@ -38,6 +39,9 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-prettier", "virtual:7137b46d0df523b17200b99f01f69f736eae84690b8e1d784a42e1a09fb978249eba01c0c0187976701f5dff14ef3eeb7eec115c475fc5a9ac7a08fc781df4e7#npm:9.1.0"],\
           ["glob", "npm:10.3.10"],\
           ["kiso.css", "npm:1.2.4"],\
+          ["pixelmatch", "npm:5.3.0"],\
+          ["playwright", "npm:1.59.1"],\
+          ["pngjs", "npm:7.0.0"],\
           ["postcss", "npm:8.5.6"],\
           ["prettier", "npm:3.2.4"],\
           ["sass", "npm:1.70.0"],\
@@ -2064,6 +2068,16 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../.yarn/berry/cache/@pkgjs-parseargs-npm-0.11.0-cd2a3fe948-10c0.zip/node_modules/@pkgjs/parseargs/",\
         "packageDependencies": [\
           ["@pkgjs/parseargs", "npm:0.11.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@playwright/test", [\
+      ["npm:1.59.1", {\
+        "packageLocation": "../../.yarn/berry/cache/@playwright-test-npm-1.59.1-8a59644a90-10c0.zip/node_modules/@playwright/test/",\
+        "packageDependencies": [\
+          ["@playwright/test", "npm:1.59.1"],\
+          ["playwright", "npm:1.59.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4496,6 +4510,14 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["fsevents", [\
+      ["patch:fsevents@npm%3A2.3.2#optional!builtin<compat/fsevents>::version=2.3.2&hash=df0bf1", {\
+        "packageLocation": "./.yarn/unplugged/fsevents-patch-19706e7e35/node_modules/fsevents/",\
+        "packageDependencies": [\
+          ["fsevents", "patch:fsevents@npm%3A2.3.2#optional!builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"],\
+          ["node-gyp", "npm:12.2.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["patch:fsevents@npm%3A2.3.3#optional!builtin<compat/fsevents>::version=2.3.3&hash=df0bf1", {\
         "packageLocation": "./.yarn/unplugged/fsevents-patch-6b67494872/node_modules/fsevents/",\
         "packageDependencies": [\
@@ -6262,6 +6284,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["pixelmatch", [\
+      ["npm:5.3.0", {\
+        "packageLocation": "../../.yarn/berry/cache/pixelmatch-npm-5.3.0-662974dec2-10c0.zip/node_modules/pixelmatch/",\
+        "packageDependencies": [\
+          ["pixelmatch", "npm:5.3.0"],\
+          ["pngjs", "npm:6.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["pkijs", [\
       ["npm:3.3.3", {\
         "packageLocation": "../../.yarn/berry/cache/pkijs-npm-3.3.3-817048cbaa-10c0.zip/node_modules/pkijs/",\
@@ -6273,6 +6305,42 @@ const RAW_RUNTIME_STATE =
           ["pvtsutils", "npm:1.3.6"],\
           ["pvutils", "npm:1.1.5"],\
           ["tslib", "npm:2.8.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["playwright", [\
+      ["npm:1.59.1", {\
+        "packageLocation": "../../.yarn/berry/cache/playwright-npm-1.59.1-8e8808a3f1-10c0.zip/node_modules/playwright/",\
+        "packageDependencies": [\
+          ["fsevents", "patch:fsevents@npm%3A2.3.2#optional!builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"],\
+          ["playwright", "npm:1.59.1"],\
+          ["playwright-core", "npm:1.59.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["playwright-core", [\
+      ["npm:1.59.1", {\
+        "packageLocation": "../../.yarn/berry/cache/playwright-core-npm-1.59.1-e63605649f-10c0.zip/node_modules/playwright-core/",\
+        "packageDependencies": [\
+          ["playwright-core", "npm:1.59.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["pngjs", [\
+      ["npm:6.0.0", {\
+        "packageLocation": "../../.yarn/berry/cache/pngjs-npm-6.0.0-31d8d85681-10c0.zip/node_modules/pngjs/",\
+        "packageDependencies": [\
+          ["pngjs", "npm:6.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:7.0.0", {\
+        "packageLocation": "../../.yarn/berry/cache/pngjs-npm-7.0.0-788de6ba02-10c0.zip/node_modules/pngjs/",\
+        "packageDependencies": [\
+          ["pngjs", "npm:7.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -8079,6 +8147,7 @@ const RAW_RUNTIME_STATE =
       ["workspace:.", {\
         "packageLocation": "./",\
         "packageDependencies": [\
+          ["@playwright/test", "npm:1.59.1"],\
           ["@prettier/plugin-php", "virtual:7137b46d0df523b17200b99f01f69f736eae84690b8e1d784a42e1a09fb978249eba01c0c0187976701f5dff14ef3eeb7eec115c475fc5a9ac7a08fc781df4e7#npm:0.23.0"],\
           ["@splidejs/splide", "npm:4.1.4"],\
           ["@wordpress/env", "npm:11.0.0"],\
@@ -8089,6 +8158,9 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-prettier", "virtual:7137b46d0df523b17200b99f01f69f736eae84690b8e1d784a42e1a09fb978249eba01c0c0187976701f5dff14ef3eeb7eec115c475fc5a9ac7a08fc781df4e7#npm:9.1.0"],\
           ["glob", "npm:10.3.10"],\
           ["kiso.css", "npm:1.2.4"],\
+          ["pixelmatch", "npm:5.3.0"],\
+          ["playwright", "npm:1.59.1"],\
+          ["pngjs", "npm:7.0.0"],\
           ["postcss", "npm:8.5.6"],\
           ["prettier", "npm:3.2.4"],\
           ["sass", "npm:1.70.0"],\

@@ -6,6 +6,7 @@
 
 | ファイル | 内容 |
 |----------|------|
+| [CLAUDE_AI_WORKFLOW.md](./CLAUDE_AI_WORKFLOW.md) | **Claude AIとの協働ワークフロー**⭐ Claude Codeで作業する際は必読 |
 | [TEMPLATE_GUIDE.md](./TEMPLATE_GUIDE.md) | **テンプレート使い分け**（URL→テンプレート対応・パーツ構成）⭐ テンプレート作成時は必読 |
 | [WORDPRESS_SETUP.md](./WORDPRESS_SETUP.md) | WordPress 初期設定・運用・トラブルシューティング |
 | [ACF_GUIDE.md](./ACF_GUIDE.md) | ACF 設定・フィールドの使い方 |
@@ -14,6 +15,7 @@
 
 ## 読み方の目安
 
+- **Claude Codeで作業する**: [CLAUDE_AI_WORKFLOW.md](./CLAUDE_AI_WORKFLOW.md) ← まずここ
 - **初めて使う**: [README.md](../README.md) → [WORDPRESS_SETUP.md](./WORDPRESS_SETUP.md)
 - **テンプレートを触る**: [TEMPLATE_GUIDE.md](./TEMPLATE_GUIDE.md)
 - **コード規則**: [coding-guidelines.md](./coding-guidelines.md)

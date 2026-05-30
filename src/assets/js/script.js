@@ -5,6 +5,7 @@ import "./_faq.js";
 import "./_result-slider.js";
 import "./_viewport.js";
 import "./_works-filter.js";
+import "./_fix-bar.js";
 
 // 開発環境でのみCSSをインポート（JS経由でスタイルを注入）
 if (import.meta.env.DEV) {
